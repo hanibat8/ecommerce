@@ -1,28 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
+import { useSelector } from 'react-redux';
+import {selectAllItems} from './categorySlice';
 import Grid from '@mui/material/Grid'
 import {styled} from "@mui/system";
-
-const srcImg=['/plant1.jpg',
-              '/plant2.jpg',
-              '/plant3.jpg',
-              '/plant4.jpg',
-              '/plant5.jpg',
-              '/plant6.jpg',
-              '/plant7.jpg',
-              '/plant8.jpg',
-              '/plant9.jpg',
-              '/plant10.jpg',
-              '/plant11.jpg',
-              '/plant12.jpg',
-              '/plant13.jpg',
-              '/plant14.jpg',
-              '/plant15.jpg',
-              '/plant16.jpg',
-              '/plant17.jpg',
-              '/plant18.jpg',
-              '/plant19.jpg',
-              '/plant20.jpg',
-              '/plant21.jpg']
 
 const itemsPerPage=8;
 
@@ -35,7 +15,7 @@ const ContainerGrid=styled('div',{})({
   display:'flex',
   flexDirection:'column',
   alignItems:'center',
-  flexBasis:'80%'
+  flexBasis:'100%'
 })
 
 const ButtonStyled=styled('button',{})({
@@ -48,11 +28,19 @@ const ButtonStyled=styled('button',{})({
   color:'#fff'
 })
 
+const HeadingsContainer=styled('div',{})({
+  display:'flex',
+  justifyContent:'space-between'
+})
+
 const ComponentGrid = () => {
+  const items=useSelector(selectAllItems)
+  console.log(items)
+
   const [currentPage,setCurrentPage]=useState(1)
-  const [paginatedArray,setPaginatedArray]=useState(()=>srcImg.slice(
+  const [paginatedArray,setPaginatedArray]=useState(()=>items.categories.slice(
     (currentPage-1)*itemsPerPage,currentPage*itemsPerPage));
-  const [noOfPages,setNoOfPages]=useState(()=>Math.ceil(srcImg.length/itemsPerPage))
+  const [noOfPages,setNoOfPages]=useState(()=>Math.ceil(items.categories.length/itemsPerPage))
 
   const onPageChange=(page)=>{
     setCurrentPage(page);
@@ -60,7 +48,7 @@ const ComponentGrid = () => {
   }
 
   const filterArray=(page)=>{
-    let arr=srcImg.slice(
+    let arr=items.categories.slice(
       (page-1)*itemsPerPage,page*itemsPerPage);
       setPaginatedArray(arr)
   }
@@ -73,12 +61,22 @@ const ComponentGrid = () => {
     return elements;
   }
 
+  useEffect(()=>{
+    filterArray(currentPage)
+  },[items])
+
   return (
     <ContainerGrid>
       <Grid container spacing={2}>
-          {paginatedArray.map((src,index)=>{
-              return <Grid xs={3} sx={{height:'16rem'}} item key={index}>
-                  <img style={{width:'100%',height:'100%'}} src={src}/>
+          {paginatedArray.map((product,index)=>{
+            console.log(product)
+              return <Grid xs={3} sx={{height:'20rem'}} item key={index}>
+                  <img style={{width:'100%',height:'80%'}} src={product.img_url}/>
+                 <HeadingsContainer>
+                  <h5>{product.category_type}</h5>
+                  <h5>{product.product_type}</h5>
+                  <h5>${product.price}</h5>
+                 </HeadingsContainer>                
               </Grid>
           })}  
       </Grid>

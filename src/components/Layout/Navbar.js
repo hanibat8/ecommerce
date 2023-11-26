@@ -39,9 +39,11 @@ const Navbar=()=>{
     return(
         <StyledNav >
             <StyledHeader>
-                <Typography variant="h3" component="h1">
-                    Hayneedle
-                </Typography>
+                <Link to='/'>
+                    <Typography variant="h3" component="h1">
+                        Hayneedle
+                    </Typography>
+                </Link>
                 <StyledTextField
                     size="small"
                     id="outlined-password-input"

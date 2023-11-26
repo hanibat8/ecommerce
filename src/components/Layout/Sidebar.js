@@ -1,21 +1,29 @@
-import React,{ useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box'
+import {category_types,products_types,price} from '../../utils/constants'
+import {styled} from "@mui/system";
+import { useDispatch } from 'react-redux';
+import {selectCategoryAndProducts} from '../categorySlice'
+
+const ProductsContainer=styled('div',{})({
+  marginLeft:'1.5rem'
+})
 
 const Sidebar = () => {
+  const [categoryType,setCategoryType]=useState([])
 
-  const options=[{name:'Silk Plants'},
-    {name:'Silk Flowers'},
-    {name:'Silk Trees'},
-    {name:'Topiaries'}]
+  const [priceRange,setPriceRange]=useState([])
 
-  const [type,setType]=useState([])
+  const [productsPanelToShow,setProductsPanelToShow]=useState([]);
 
-  const [height,setHeight]=useState([])
+  const [productType,setProductType]=useState([])
 
-  const [style,setStyle]=useState([])
+  const dispatch = useDispatch()
+
+  console.log(categoryType,productType)
 
   const handleChange=(arr,itemSelected)=>{
     let newArr=[...arr];
@@ -28,64 +36,85 @@ const Sidebar = () => {
     return newArr
   }
 
-  const handleChangeType=(e)=>{
-    let arr=handleChange(type,e.target.value)
-    setType(arr)
+  const handleChangeCategoryType=(e)=>{
+    let arr=handleChange(categoryType,e.target.value)
+    setCategoryType(arr);
+    dispatch(selectCategoryAndProducts({categories:arr,products:productType}))
   }
 
-  const handleHeightType=(e)=>{
-    let arr=handleChange(height,e.target.value)
-    setHeight(arr)
+  const handleChangeProductType=(e)=>{
+    let arr=handleChange(productType,e.target.value)
+    setProductType(arr);
+    dispatch(selectCategoryAndProducts({categories:categoryType,products:arr}))
   }
 
-  const handleStyleType=(e)=>{
-    let arr=handleChange(style,e.target.value)
-    setStyle(arr)
+  const handlePriceType=(e)=>{
+    let arr=handleChange(priceRange,e.target.value)
+    setPriceRange(arr)
   }
 
-  console.log(type)
+  const filterProductTypesOnCategoryChange=()=>{
+    let arr=[...productsPanelToShow]; 
+    category_types.forEach((category)=>{
+      if(categoryType.includes(category)){
+        if(!arr.includes(products_types[category][0]))
+          arr.push(...products_types[category])
+      }
+      else{
+        if(arr.includes(products_types[category][0])){
+          arr=arr.filter((item)=>!products_types[category].includes(item))
+        }
+      }
+    })
+  
+    setProductsPanelToShow([...arr])
+  }
+
+  useEffect(()=>{
+    filterProductTypesOnCategoryChange()
+  },[categoryType])
   
   return (
     <Box sx={{ flexBasis:'22%'}}>
       <div>
-        <h4>Type</h4>
+        <h4>Category Type</h4>
         <FormGroup>
-          {options.map((option,index)=>{
-            return <FormControlLabel key={index} control={<Checkbox
-                                     value={option.name}
-                                     onChange={handleChangeType}
-                                     inputProps={{ 'aria-label': 'controlled' }}/>} 
-                                     label={option.name} />
+          {category_types.map((category,index)=>{
+            return <FormControlLabel key={index} 
+              control={<Checkbox
+              value={category}
+              onChange={handleChangeCategoryType}
+              inputProps={{ 'aria-label': 'controlled' }}/>} 
+              label={category} />
             })}  
         </FormGroup>
       </div>
-      <div>
-        <h4>Height</h4>
+      {productsPanelToShow.length>0 && <ProductsContainer>
+        <h4>Product Type</h4>
         <FormGroup>
-          {options.map((option,index)=>{
-            return <FormControlLabel key={index} control={<Checkbox
-              value={option.name}
-              onChange={handleHeightType}
+          {productsPanelToShow.map((productTypes,index)=>{
+            return <FormControlLabel key={index} 
+              control={<Checkbox
+              value={productTypes}
+              onChange={handleChangeProductType}
+              inputProps={{ 'aria-label': 'controlled' }}/>} 
+              label={productTypes} />
+            })}  
+        </FormGroup>
+      </ProductsContainer>}
+      <div>
+        <h4>Price</h4>
+        <FormGroup>
+          {price.map((price,index)=>{
+            return <FormControlLabel key={index} 
+              control={<Checkbox
+              value={price}
+              onChange={handlePriceType}
               inputProps={{ 'aria-label': 'controlled' }}
             />} 
-            label={option.name} />
+            label={price} />
           })}
         </FormGroup>
-        
-      </div>
-      <div>
-        <h4>Style</h4>
-        <FormGroup>
-        {options.map((option,index)=>{
-          return <FormControlLabel key={index} control={<Checkbox
-            value={option.name}
-            onChange={handleStyleType}
-            inputProps={{'aria-label': 'controlled' }}
-          />} 
-          label={option.name} />
-        })}
-        </FormGroup>
-       
       </div>
     </Box>
   )

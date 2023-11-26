@@ -29,11 +29,11 @@ const Carousal = () => {
       imgSrc:'/home-decor.jpg'},
     { name:'Bookcase',
       imgSrc:'/bookcase.avif'},
-    { name:'Furniture',
+    { name:'Test1',
       imgSrc:'/furniture.jpg'},
-    { name:'Furniture',
+    { name:'Test2',
       imgSrc:'/furniture.jpg'},
-    { name:'Furniture',
+    { name:'Test3',
       imgSrc:'/furniture.jpg'}
     ]
   const sliderContainer=useRef(null);
@@ -54,7 +54,7 @@ const Carousal = () => {
           </div>
             <StyledCardContainer ref={sliderContainer}>
                 {categories.map((category)=>{
-                  return <CardComponent srcProp={category.imgSrc} name={category.name}/>
+                  return <CardComponent key={category.name} srcProp={category.imgSrc} name={category.name}/>
                 })}
                 
             </StyledCardContainer>

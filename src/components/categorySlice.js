@@ -23,7 +23,7 @@ const categorySlice=createSlice({
                 const productMatch=action.payload.products.length===0 
                                   || !action.payload.products.some(selectedProduct=>products_types[product.category_type].includes(selectedProduct))
                                   || action.payload.products.includes(product.product_type);
-               
+               //
                if(categoryMatch && productMatch)
                     return product
               })

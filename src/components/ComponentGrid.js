@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useMemo} from 'react'
 import { useSelector } from 'react-redux';
 import {selectAllItems} from './categorySlice';
 import Grid from '@mui/material/Grid'
@@ -35,41 +35,37 @@ const HeadingsContainer=styled('div',{})({
 
 const ComponentGrid = () => {
   const items=useSelector(selectAllItems)
-  console.log(items)
 
   const [currentPage,setCurrentPage]=useState(1)
   const [paginatedArray,setPaginatedArray]=useState(()=>items.categories.slice(
     (currentPage-1)*itemsPerPage,currentPage*itemsPerPage));
   const [noOfPages,setNoOfPages]=useState(()=>Math.ceil(items.categories.length/itemsPerPage))
 
-  const onPageChange=(page)=>{
-    setCurrentPage(page);
-    filterArray(page)
-  }
+  const onPageChange=(page)=>setCurrentPage(page);
 
   const filterArray=(page)=>{
     let arr=items.categories.slice(
       (page-1)*itemsPerPage,page*itemsPerPage);
       setPaginatedArray(arr)
+      setNoOfPages(Math.ceil(items.categories.length/itemsPerPage))
   }
 
-  const createButtons=()=>{
+  const createButtons=useMemo(()=>{
     let elements = [];
     for(let i=1; i <= noOfPages; i++){
         elements.push(<ButtonStyled onClick={()=>onPageChange(i)} key={i}>{i}</ButtonStyled>);
     }
     return elements;
-  }
+  },[noOfPages])
 
   useEffect(()=>{
     filterArray(currentPage)
-  },[items])
+  },[items,currentPage])
 
   return (
     <ContainerGrid>
       <Grid container spacing={2}>
           {paginatedArray.map((product,index)=>{
-            console.log(product)
               return <Grid xs={3} sx={{height:'20rem'}} item key={index}>
                   <img style={{width:'100%',height:'80%'}} src={product.img_url}/>
                  <HeadingsContainer>
@@ -81,7 +77,7 @@ const ComponentGrid = () => {
           })}  
       </Grid>
       <Footer>
-        {createButtons()}         
+        {createButtons}         
       </Footer>
     </ContainerGrid>
   )

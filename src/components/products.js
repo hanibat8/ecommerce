@@ -6,28 +6,28 @@ export const products=[
         product_type:"Kitchen"
      },
     {
-        category_type:"Furniture",
+        category_type:"Decor",
         img_url:"https://images.unsplash.com/photo-1556909212-d5b604d0c90d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-        price:1800,
-        product_type:"Kitchen",
+        price:1400,
+        product_type:"DecorC",
     },
     {   
-        category_type:"Furniture",
+        category_type:"Outdoor",
         img_url:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=658&q=80",
         price:250,
-        product_type:"Chair"
+        product_type:"OutdoorB"
     },
     {
-        category_type:"Furniture",
+        category_type:"Plants",
         img_url:"https://plus.unsplash.com/premium_photo-1683917067889-c88599491d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
         price:600,
-        product_type:"Kitchen"
+        product_type:"PlantA"
     },
     {
-        category_type:"Furniture",
+        category_type:"Decor",
         img_url:"https://images.unsplash.com/photo-1586208958839-06c17cacdf08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=665&q=80",
         price:1300,
-        product_type:"Kitchen"
+        product_type:"DecorA"
     },
     {
         category_type:"Furniture",
@@ -42,10 +42,10 @@ export const products=[
         product_type:"Table"
     },
     {
-        category_type:"Furniture",
+        category_type:"Decor",
         img_url:"https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80",
         price:600,
-        product_type:"Table"
+        product_type:"DecorB"
     },
     {
         category_type:"Furniture",
@@ -54,10 +54,10 @@ export const products=[
         product_type:"Kitchen"
     },
     {
-        category_type:"Furniture",
+        category_type:"Outdoor",
         img_url:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
         price:550,
-        product_type:"Chair"
+        product_type:"OutdoorA"
     },
     {
         category_type:"Furniture",
@@ -72,10 +72,10 @@ export const products=[
         product_type:"Table"
     },
     {
-        category_type:"Furniture",
+        category_type:"Outdoor",
         img_url:"https://images.unsplash.com/photo-1556910585-09baa3a3998e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=465&q=80",
         price:450,
-        product_type:"Kitchen"
+        product_type:"OutdoorC"
     },
     {
         category_type:"Furniture",
@@ -102,10 +102,10 @@ export const products=[
         product_type:"Kitchen"
     },
     {
-        category_type:"Furniture",
+        category_type:"Decor",
         img_url:"https://images.unsplash.com/photo-1595187139760-5cedf9ab5850?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=931&q=80",
         price:900,
-        product_type:"Kitchen"
+        product_type:"DecorA"
     },
     {
         category_type:"Furniture",
@@ -143,6 +143,12 @@ export const products=[
         price:2500,
         product_type:"TypeC"
     },
+    {   
+        category_type:"Furniture",
+        img_url:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=658&q=80",
+        price:250,
+        product_type:"Chair"
+    },
     {
         category_type:"Plants",
         img_url:"https://images.unsplash.com/photo-1595187139760-5cedf9ab5850?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=931&q=80",
@@ -154,5 +160,29 @@ export const products=[
         img_url:"https://images.unsplash.com/photo-1595187139760-5cedf9ab5850?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=931&q=80",
         price:400,
         product_type:"TypeC"
+    },
+    {
+        category_type:"Furniture",
+        img_url:"https://plus.unsplash.com/premium_photo-1683917067889-c88599491d5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+        price:600,
+        product_type:"Kitchen"
+    },
+    {
+        category_type:"Furniture",
+        img_url:"https://images.unsplash.com/photo-1586208958839-06c17cacdf08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=665&q=80",
+        price:1300,
+        product_type:"Kitchen"
+    },
+    {
+        category_type:"Plants",
+        img_url:"https://images.unsplash.com/photo-1595187139760-5cedf9ab5850?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=931&q=80",
+        price:400,
+        product_type:"TypeC"
+    },
+    {
+        category_type:"Furniture",
+        img_url:"https://images.unsplash.com/photo-1556909212-d5b604d0c90d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+        price:1800,
+        product_type:"Kitchen",
     },
 ]

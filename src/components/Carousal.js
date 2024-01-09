@@ -2,6 +2,7 @@ import React,{useRef} from 'react';
 import CardComponent from './CardComponent';
 import LeftArrowIcon from './LeftArrowIcon';
 import RightArrowIcon from './RightArrowIcon';
+import Box from '@mui/material/Box'
 
 import {styled} from "@mui/system";
 
@@ -9,7 +10,7 @@ const StyledCardContainer=styled('div',{})({
     display:'flex',
     gap:'1rem',
     overflow:'hidden',
-    maxWidth:'1200px',
+    maxWidth:'100%',
     scrollBehavior: 'smooth'
 })
 
@@ -47,7 +48,7 @@ const Carousal = () => {
   }
 
   return (
-    <div className='container'>
+    <Box sx={{width:'100%'}}>
         <StyledCarousalContentContainer>
           <div onClick={onLeftBtnClickHandler}>
            <LeftArrowIcon/>
@@ -62,7 +63,7 @@ const Carousal = () => {
               <RightArrowIcon/>
             </div>
         </StyledCarousalContentContainer>
-    </div>
+    </Box>
   )
 }
 

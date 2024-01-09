@@ -18,14 +18,18 @@ const ContainerGrid=styled('div',{})({
   flexBasis:'100%'
 })
 
-const ButtonStyled=styled('button',{})({
+const ButtonStyled=styled('button')({
   marginRight:'1rem',
   width:'2rem',
   backgroundColor:'#598391',
   border:'none',
   cursor:'pointer',
   padding:'.4rem ',
-  color:'#fff'
+  color:'#fff',
+   '&:hover': {
+    backgroundColor: '#456',
+    // Add other hover styles as needed
+  },
 })
 
 const HeadingsContainer=styled('div',{})({
@@ -33,21 +37,25 @@ const HeadingsContainer=styled('div',{})({
   justifyContent:'space-between'
 })
 
+const MessagePara=styled('p',{})({
+  fontWeight:'bold'
+})
+
 const ComponentGrid = () => {
   const items=useSelector(selectAllItems)
 
   const [currentPage,setCurrentPage]=useState(1)
-  const [paginatedArray,setPaginatedArray]=useState(()=>items.categories.slice(
+  const [paginatedArray,setPaginatedArray]=useState(()=>items.products.slice(
     (currentPage-1)*itemsPerPage,currentPage*itemsPerPage));
-  const [noOfPages,setNoOfPages]=useState(()=>Math.ceil(items.categories.length/itemsPerPage))
+  const [noOfPages,setNoOfPages]=useState(()=>Math.ceil(items.products.length/itemsPerPage))
 
   const onPageChange=(page)=>setCurrentPage(page);
 
   const filterArray=(page)=>{
-    let arr=items.categories.slice(
+    let arr=items.products.slice(
       (page-1)*itemsPerPage,page*itemsPerPage);
       setPaginatedArray(arr)
-      setNoOfPages(Math.ceil(items.categories.length/itemsPerPage))
+      setNoOfPages(Math.ceil(items.products.length/itemsPerPage))
   }
 
   const createButtons=useMemo(()=>{
@@ -62,19 +70,25 @@ const ComponentGrid = () => {
     filterArray(currentPage)
   },[items,currentPage])
 
+  console.log(items,paginatedArray)
+
   return (
     <ContainerGrid>
       <Grid container spacing={2}>
-          {paginatedArray.map((product,index)=>{
-              return <Grid xs={3} sx={{height:'20rem'}} item key={index}>
-                  <img style={{width:'100%',height:'80%'}} src={product.img_url}/>
+          {paginatedArray.length===0 ? 
+          (<Grid xs={12} sx={{display:'flex', justifyContent:'center', alignItems:'center', height:'40rem'}} item>
+            <MessagePara>No items to show</MessagePara>
+            </Grid>)
+          : (paginatedArray.map((product,index)=>{
+              return <Grid xs={12} sm={6} md={3} sx={{height:'20rem'}} item key={index}>
+                  <img style={{width:'100%',height:'80%', objectFit:'cover'}} src={product.img_url}/>
                  <HeadingsContainer>
                   <h5>{product.category_type}</h5>
                   <h5>{product.product_type}</h5>
                   <h5>${product.price}</h5>
                  </HeadingsContainer>                
               </Grid>
-          })}  
+          }))}  
       </Grid>
       <Footer>
         {createButtons}         

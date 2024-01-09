@@ -10,7 +10,7 @@ const HeaderImg=styled('img',{})({
 
 const Home=()=>{
     return(
-        <Container maxWidth='xl'>
+        <Container>
             <HeaderImg alt='' src='/Hayneedle img.jpg'/>
             <ShopByCategory/>
         </Container>

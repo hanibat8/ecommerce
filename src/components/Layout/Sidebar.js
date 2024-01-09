@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import {category_types,products_types,price} from '../../utils/constants'
 import {styled} from "@mui/system";
 import { useDispatch } from 'react-redux';
-import {selectCategoryAndProducts} from '../categorySlice'
+import {filterOnCategoryAndProduct,filterOnPrice} from '../categorySlice'
 
 const ProductsContainer=styled('div',{})({
   marginLeft:'1.5rem'
@@ -23,8 +23,6 @@ const Sidebar = () => {
 
   const dispatch = useDispatch()
 
-  console.log(categoryType,productType)
-
   const handleChange=(arr,itemSelected)=>{
     let newArr=[...arr];
 
@@ -38,19 +36,59 @@ const Sidebar = () => {
 
   const handleChangeCategoryType=(e)=>{
     let arr=handleChange(categoryType,e.target.value)
+    
+    //Here if we have deselected a catefory then the length of the new arr will be less than the prev one we will filter the selectedProductTypes
+    if(arr.length<categoryType.length){
+      let productTypeState=[...productType]
+      productTypeState=productTypeState.filter((product)=>!products_types[e.target.value].includes(product))
+      setProductType(productTypeState)
+    }
+
     setCategoryType(arr);
-    dispatch(selectCategoryAndProducts({categories:arr,products:productType}))
+    dispatch(filterOnCategoryAndProduct({categories:arr,newCategory:e.target.value,products:productType,prices:priceRange}))
   }
 
   const handleChangeProductType=(e)=>{
     let arr=handleChange(productType,e.target.value)
     setProductType(arr);
-    dispatch(selectCategoryAndProducts({categories:categoryType,products:arr}))
+    dispatch(filterOnCategoryAndProduct({categories:categoryType,products:arr,newProduct:e.target.value,prices:priceRange}))
+  }
+
+  const handlePriceArr=(priceSelected)=>{
+    let priceRangePrev=[...priceRange];
+
+    if(priceRangePrev.includes(priceSelected))
+      priceRangePrev=priceRangePrev.filter((price)=>price!=priceSelected)
+    else
+      priceRangePrev.push(priceSelected)
+    // let [minRange,maxRange]=priceSelected.split('-');
+
+    // minRange = minRange.includes('+') ? +minRange.split('+')[0] : +minRange;
+    // maxRange = maxRange === undefined ? Infinity : +maxRange;
+
+    // if(priceRangePrev.includes(minRange) && priceRangePrev.includes(maxRange)){
+    //   priceRangePrev=priceRangePrev.filter((price)=>price!=minRange)
+    //   if(maxRange===Infinity)
+    //     priceRangePrev=priceRangePrev.filter((price)=>price!=maxRange)
+    //   return priceRangePrev
+    // }
+   
+    // [minRange,maxRange].forEach(range => {
+    //   if (range !== undefined && range !== null && !priceRangePrev.includes(range)) {
+    //     priceRangePrev.push(range);
+    //   }
+
+    // });
+
+    // priceRangePrev=priceRangePrev.sort((a,b)=>a-b)
+    return priceRangePrev
   }
 
   const handlePriceType=(e)=>{
-    let arr=handleChange(priceRange,e.target.value)
+    let arr=handlePriceArr(e.target.value)
+
     setPriceRange(arr)
+    dispatch(filterOnCategoryAndProduct({categories:categoryType,products:productType,prices:arr}))
   }
 
   const filterProductTypesOnCategoryChange=()=>{
@@ -75,12 +113,12 @@ const Sidebar = () => {
   },[categoryType])
   
   return (
-    <Box sx={{ flexBasis:'22%'}}>
+    <Box sx={{ flexBasis:['60%','40%','22%']}}>
       <div>
         <h4>Category Type</h4>
         <FormGroup>
-          {category_types.map((category,index)=>{
-            return <FormControlLabel key={index} 
+          {category_types.map(category=>{
+            return <FormControlLabel key={category} 
               control={<Checkbox
               value={category}
               onChange={handleChangeCategoryType}
@@ -92,8 +130,8 @@ const Sidebar = () => {
       {productsPanelToShow.length>0 && <ProductsContainer>
         <h4>Product Type</h4>
         <FormGroup>
-          {productsPanelToShow.map((productTypes,index)=>{
-            return <FormControlLabel key={index} 
+          {productsPanelToShow.map(productTypes=>{
+            return <FormControlLabel key={productTypes} 
               control={<Checkbox
               value={productTypes}
               onChange={handleChangeProductType}
@@ -105,8 +143,8 @@ const Sidebar = () => {
       <div>
         <h4>Price</h4>
         <FormGroup>
-          {price.map((price,index)=>{
-            return <FormControlLabel key={index} 
+          {price.map(price=>{
+            return <FormControlLabel key={price} 
               control={<Checkbox
               value={price}
               onChange={handlePriceType}

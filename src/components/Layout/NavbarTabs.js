@@ -20,7 +20,6 @@ const StyledLink = styled(RouterLink)(({ textColor }) =>({
 
 
 const NavbarTabs = ({displayStyle, textColor}) => {
-  console.log(displayStyle, textColor)
   return (
     <NavbarTabsContainer displayStyle={displayStyle} textColor={textColor}>
       <Typography >

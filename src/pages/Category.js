@@ -8,12 +8,9 @@ import ComponentGrid from '../components/ComponentGrid';
 const Category = () => {
   let {categoryType}=useParams()
 
-  console.log(categoryType)
-  categoryType= categoryType==='Furniture' &&'products';
   useEffect(()=>{
     if(categoryType){
       let data=dataService.get(categoryType)
-      console.log(data)
     }
   },[categoryType])
 

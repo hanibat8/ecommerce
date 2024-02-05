@@ -1,8 +1,9 @@
-import React,{useState, useEffect, useMemo} from 'react'
-import { useSelector } from 'react-redux';
-import {selectAllItems} from './categorySlice';
+import React,{useState, useEffect, useMemo, useRef} from 'react'
+import { useSelector,useDispatch } from 'react-redux';
+import {selectAllItems,filterOnCategoryAndProduct} from './categorySlice';
 import Grid from '@mui/material/Grid'
 import {styled} from "@mui/system";
+import Box from '@mui/material/Box'
 
 const itemsPerPage=8;
 
@@ -41,13 +42,38 @@ const MessagePara=styled('p',{})({
   fontWeight:'bold'
 })
 
+const ImgContainer=styled(Box)({
+  width:'100%',
+  height:'80%',
+  position:'relative',
+  '&:hover ': {
+    display:'block',
+    background: 'rgba(0, 0, 0, 0.7)',
+  },
+})
+
+const ImgHoverBackdrop=styled(Box)({
+  display:'none',
+  width:'100%',
+  height:'100%',
+  top:'0',
+  right:'0',
+  position:'absolute',
+  background:'rgba(0, 0, 0, 0)',
+  transition: 'background 0.3s',
+}, { name: 'img-hover-backdrop' })
+
+
 const ComponentGrid = () => {
+  const firstRunRef = useRef(true);
   const items=useSelector(selectAllItems)
 
   const [currentPage,setCurrentPage]=useState(1)
   const [paginatedArray,setPaginatedArray]=useState(()=>items.products.slice(
     (currentPage-1)*itemsPerPage,currentPage*itemsPerPage));
   const [noOfPages,setNoOfPages]=useState(()=>Math.ceil(items.products.length/itemsPerPage))
+
+  const dispatch=useDispatch();
 
   const onPageChange=(page)=>setCurrentPage(page);
 
@@ -67,10 +93,18 @@ const ComponentGrid = () => {
   },[noOfPages])
 
   useEffect(()=>{
-    filterArray(currentPage)
+    if(!firstRunRef.current){
+      filterArray(currentPage)
+    }
   },[items,currentPage])
 
-  console.log(items,paginatedArray)
+  useEffect(()=>{
+    if(firstRunRef.current){
+      dispatch(filterOnCategoryAndProduct({categories:[],prices:[]}))
+      firstRunRef.current=false
+    }
+      
+  },[])
 
   return (
     <ContainerGrid>
@@ -80,8 +114,13 @@ const ComponentGrid = () => {
             <MessagePara>No items to show</MessagePara>
             </Grid>)
           : (paginatedArray.map((product,index)=>{
-              return <Grid xs={12} sm={6} md={3} sx={{height:'20rem'}} item key={index}>
-                  <img style={{width:'100%',height:'80%', objectFit:'cover'}} src={product.img_url}/>
+              return <Grid xs={12} sm={6} md={3} sx={{height:'20rem', cursor:'pointer'}} item key={index}>
+                  <ImgContainer>
+                    <img style={{ width:'100%',height:'100%', objectFit:'cover'}} src={product.img_url}/>
+                    <ImgHoverBackdrop>
+                    fssdfdfdsf
+                    </ImgHoverBackdrop>
+                  </ImgContainer>
                  <HeadingsContainer>
                   <h5>{product.category_type}</h5>
                   <h5>{product.product_type}</h5>

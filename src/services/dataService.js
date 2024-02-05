@@ -10,12 +10,9 @@ let dataServiceInstance=(()=>{
     return instance
 })()
 
-console.log(dataServiceInstance)
-
 let get=async (endpoint)=>{
     try{
        let response= await dataServiceInstance.get()
-       console.log(response)
        return response.data
     }
     catch(error){

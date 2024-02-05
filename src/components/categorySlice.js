@@ -17,8 +17,6 @@ const categorySlice=createSlice({
                     ...state,
                     products:products
                 }
-
-                console.log('hereeee',action.payload.prices)
                 
              // Filter categories based on selected categories and product types
             const updatedCategories=products.filter((product)=>{
@@ -48,7 +46,6 @@ const categorySlice=createSlice({
                         break;
                 }
                 
-                console.log(productPriceRange,product.price)
                 const priceMatch=action.payload.prices.length===0 
                                   || action.payload.prices.includes(productPriceRange)
             

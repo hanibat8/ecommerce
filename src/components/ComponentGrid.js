@@ -1,6 +1,7 @@
 import React,{useState, useEffect, useMemo, useRef} from 'react'
 import { useSelector,useDispatch } from 'react-redux';
 import {selectAllItems,filterOnCategoryAndProduct} from './categorySlice';
+import IconBxCartAdd from './CartAddIcon';
 import Grid from '@mui/material/Grid'
 import {styled} from "@mui/system";
 import Box from '@mui/material/Box'
@@ -45,24 +46,20 @@ const MessagePara=styled('p',{})({
 const ImgContainer=styled(Box)({
   width:'100%',
   height:'80%',
-  position:'relative',
-  '&:hover ': {
-    display:'block',
-    background: 'rgba(0, 0, 0, 0.7)',
+  '&:hover ': {  
+    background: 'rgba(0, 0, 0, .8)',
+    '& img': {
+      opacity: 0.6,  // Adjust the opacity as needed
+    },
+
+  },
+  '& img': {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    transition: 'opacity 0.3s',
   },
 })
-
-const ImgHoverBackdrop=styled(Box)({
-  display:'none',
-  width:'100%',
-  height:'100%',
-  top:'0',
-  right:'0',
-  position:'absolute',
-  background:'rgba(0, 0, 0, 0)',
-  transition: 'background 0.3s',
-}, { name: 'img-hover-backdrop' })
-
 
 const ComponentGrid = () => {
   const firstRunRef = useRef(true);
@@ -113,21 +110,17 @@ const ComponentGrid = () => {
           (<Grid xs={12} sx={{display:'flex', justifyContent:'center', alignItems:'center', height:'40rem'}} item>
             <MessagePara>No items to show</MessagePara>
             </Grid>)
-          : (paginatedArray.map((product,index)=>{
-              return <Grid xs={12} sm={6} md={3} sx={{height:'20rem', cursor:'pointer'}} item key={index}>
-                  <ImgContainer>
-                    <img style={{ width:'100%',height:'100%', objectFit:'cover'}} src={product.img_url}/>
-                    <ImgHoverBackdrop>
-                    fssdfdfdsf
-                    </ImgHoverBackdrop>
-                  </ImgContainer>
-                 <HeadingsContainer>
-                  <h5>{product.category_type}</h5>
-                  <h5>{product.product_type}</h5>
-                  <h5>${product.price}</h5>
-                 </HeadingsContainer>                
-              </Grid>
-          }))}  
+          : (paginatedArray.map((product,index)=><Grid xs={12} sm={6} md={3} sx={{ height: '20rem', cursor: 'pointer' }} item key={index}>
+            <ImgContainer>
+              <img src={product.img_url} />
+              <IconBxCartAdd />
+            </ImgContainer>
+            <HeadingsContainer>
+              <h5>{product.category_type}</h5>
+              <h5>{product.product_type}</h5>
+              <h5>${product.price}</h5>
+            </HeadingsContainer>
+          </Grid>))}  
       </Grid>
       <Footer>
         {createButtons}         
